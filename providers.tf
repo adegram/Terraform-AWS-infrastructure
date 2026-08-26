@@ -10,3 +10,12 @@ terraform {
 provider "aws" {
   region = var.aws_region
 }
+
+terraform {
+  backend "s3" {
+    bucket = "company-infrastructure-tf-state"
+    key    = "company-vpc/terraform.tfstate"
+    region = "us-east-1"
+    use_lockfile = true
+  }
+}
