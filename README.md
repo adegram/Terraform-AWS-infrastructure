@@ -1,90 +1,63 @@
-# Scaling My AWS Infrastructure I Built
+# AWS Terraform Projects
 
-A Terraform project that provisions a secure, segmented AWS network (VPC, public/private subnets, security groups, and EC2 instances) for internal company access, built to scale across multiple environments with a self-provisioned, encrypted remote state backend.
+A collection of AWS infrastructure projects built and managed using Terraform.
 
-## What This Project Does
+The projects in this repository focus on provisioning, configuring, and managing AWS infrastructure as code. Each project is organized separately and documents the Terraform configuration, infrastructure design, and deployment approach used.
 
-- Provisions an isolated VPC with a public subnet (internet-facing) and a private subnet (internal only)
-- Restricts HTTPS access into the public instance to a single trusted CIDR block, nothing else reaches it
-- Locks the private instance down so it's reachable only from the public instance's security group, with no direct route to or from the internet
-- Packages all of the above into a reusable Terraform module so multiple environments (branches/sites) can be deployed from the same codebase
-- Provisions its own remote state backend (S3 bucket with versioning, encryption, and public access blocked) as code, rather than as a manual setup step
+## What You'll Find Here
+
+The projects cover different areas of AWS infrastructure and Terraform, including:
+
+- AWS networking and VPC infrastructure
+- Subnets and route tables
+- Internet and NAT gateways
+- Security groups and network access
+- IAM and access management
+- Compute resources
+- Load balancing
+- Auto Scaling
+- Databases
+- Storage
+- DNS
+- Monitoring and logging
+- Multi-environment infrastructure
+- Reusable Terraform modules
+- Remote Terraform state
+- Infrastructure automation
+
+Projects may vary in scope and architecture depending on the AWS service or infrastructure concept being demonstrated.
+
+## Technologies
+
+- Terraform
+- AWS
+- HCL
+- Git & GitHub
+- AWS CLI
+
+Additional AWS services and DevOps tools may be used where they are relevant to individual projects.
 
 ## Project Structure
 
-```
-.
-├── bootstrap/                  # Provisions the S3 remote state backend
-│   ├── main.tf                 # S3 bucket, versioning, encryption, public access block
-│   ├── outputs.tf
-│   └── provider.tf
+Each AWS project is kept in its own directory.
+
+```text
+aws-terraform-projects/
 │
-└── main/
-    ├── company-modules/         # Reusable network module
-    │   ├── main.tf              # VPC, subnets, IGW, route table, security groups, instances
-    │   ├── variables.tf
-    │   └── outputs.tf
-    │
-    └── environments/
-        ├── env-1/                # First environment/site
-        │   ├── main.tf           # Calls company-modules, defines S3 backend
-        │   ├── providers.tf
-        │   ├── terraform.tfvars
-        │   └── variables.tf
-        │
-        └── env-2/                # Second environment/site
-            ├── main.tf
-            ├── providers.tf
-            ├── terraform.tfvars
-            └── variables.tf
-```
-
-Each environment calls the same `company-modules` module and supplies its own variable values, so the network pattern is defined once and reused per site.
-
-## Architecture Overview
-
-- **VPC** split into a public subnet and a private subnet
-- **Public subnet**: routed to an Internet Gateway, hosts the public-facing EC2 instance, only accepts inbound HTTPS (443) from a trusted CIDR block
-- **Private subnet**: no route to the Internet Gateway at all, hosts the backend EC2 instance
-- **Security groups**: the private instance's security group only accepts inbound HTTPS from the public instance's security group (via `referenced_security_group_id`), not from any IP range
-- **Remote state**: each environment stores its Terraform state in a shared S3 bucket, isolated by a per-environment key, with state locking enabled (`use_lockfile = true`)
-- **State backend security**: the S3 bucket is versioned (for recovery), encrypted at rest (AES256), and fully blocked from public access
-
-## Prerequisites
-
-- [Terraform](https://developer.hashicorp.com/terraform/downloads) (project uses the `hashicorp/aws` provider, version `6.56.0`)
-- An AWS account with credentials configured (e.g. via `aws configure` or environment variables)
-- IAM permissions to create VPCs, subnets, security groups, EC2 instances, and S3 buckets
-
-## Usage
-
-### 1. Provision the remote state backend (one-time)
-
-```bash
-cd bootstrap
-terraform init
-terraform apply
-```
-
-This creates the S3 bucket that every environment's state will be stored in. It only needs to be run once, before any environment is deployed.
-
-### 2. Deploy an environment
-
-```bash
-cd main/environments/env-1
-terraform init
-terraform plan
-terraform apply
-```
-
-Repeat for `env-2` (or any additional environment folder) independently, each one has its own state file and lock, so environments won't interfere with each other.
-
-### 3. Update variables per environment
-
-Each environment's `terraform.tfvars` controls its own region, CIDR blocks, instance types, AMI, and trusted CIDR, edit that file to customize a given environment without touching the module.
-
-## What's Next
-
-- **VPC Peering** between environments, if two sites eventually need to talk to each other directly (Peering fits a two-VPC connection; Transit Gateway would only make sense once there are 3-5+ VPCs to interconnect)
-- Remote backend for the `bootstrap` project itself, to remove its dependency on local state
-- CI/CD pipeline to run `terraform plan` on PRs and `apply` on merge per environment
+├── vpc-networking/
+│   ├── bootstrap/
+│   ├── vpc-networking-module/
+│   ├── environments/
+│   │   ├── dev-env-1/
+│   │   └── prod-env-2/
+│   ├── outputs.tf
+│   ├── variables.tf
+│   └── README.md
+│
+├── <next-aws-project>/
+│   └── README.md
+│
+├── <another-aws-project>/
+│   └── README.md
+│
+└── README.md
