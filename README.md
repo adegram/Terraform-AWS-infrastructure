@@ -11,21 +11,13 @@ The projects cover different areas of AWS infrastructure and Terraform, includin
 - AWS networking and VPC infrastructure
 - Subnets and route tables
 - Internet and NAT gateways
-- Security groups and network access
 - IAM and access management
-- Compute resources
-- Load balancing
-- Auto Scaling
-- Databases
-- Storage
-- DNS
+- Compute resources, Databases and Storage
+- DNS, Load balancing, Auto Scaling, Security groups and network access
 - Monitoring and logging
 - Multi-environment infrastructure
-- Reusable Terraform modules
-- Remote Terraform state
+- Reusable Terraform modules, Remote Terraform state
 - Infrastructure automation
-
-Projects may vary in scope and architecture depending on the AWS service or infrastructure concept being demonstrated.
 
 ## Technologies
 
@@ -39,7 +31,7 @@ Additional AWS services and DevOps tools may be used where they are relevant to 
 
 ## Project Structure
 
-Each AWS project is kept in its own directory.
+Each AWS project I've kept in its own directory.
 
 ```text
 aws-terraform-projects/
