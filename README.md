@@ -14,7 +14,6 @@ The projects cover different areas of AWS infrastructure and Terraform, includin
 - IAM and access management
 - Compute resources, Databases and Storage
 - DNS, Load balancing, Auto Scaling, Security groups and network access
-- Monitoring and logging
 - Multi-environment infrastructure
 - Reusable Terraform modules, Remote Terraform state
 - Infrastructure automation
