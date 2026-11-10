@@ -9,11 +9,11 @@ output aws_s3_bucket {
 }
 
 output aws_s3_bucket_versioning {
-  description = "The versioning configuration for the S3 bucket"
+  description = "The Versioning configuration for the S3 bucket"
   value = aws_s3_bucket_versioning.company-bucket-versioning.bucket
 }
 
 output aws_s3_bucket_server_side_encryption_configuration {
-  description = "The Server-side encryption configuration for the S3 bucket"
+  description = "The Server-side Encryption configuration for the S3 bucket"
   value = aws_s3_bucket_server_side_encryption_configuration.company-bucket-encryption.bucket
 }
