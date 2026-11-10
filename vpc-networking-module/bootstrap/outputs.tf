@@ -14,6 +14,6 @@ output aws_s3_bucket_versioning {
 }
 
 output aws_s3_bucket_server_side_encryption_configuration {
-  description = "The server-side encryption configuration for the S3 bucket"
+  description = "The Server-side encryption configuration for the S3 bucket"
   value = aws_s3_bucket_server_side_encryption_configuration.company-bucket-encryption.bucket
 }
