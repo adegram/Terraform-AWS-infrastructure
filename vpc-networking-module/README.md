@@ -4,9 +4,7 @@ A reusable Terraform project for provisioning a secure, segmented AWS infrastruc
 
 The infrastructure is designed around **reusability, environment isolation, security, and infrastructure as code (IaC)**.
 
-## Architecture
-
-The project provisions the following AWS resources:
+## Architecture: The project provisions the following AWS resources:
 
 * VPC
 * Public and private subnets
