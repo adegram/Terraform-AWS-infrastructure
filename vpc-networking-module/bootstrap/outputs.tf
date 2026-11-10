@@ -1,5 +1,5 @@
 output aws_s3_bucket_public_access_block {
-  description = "The public access block configuration for the S3 bucket"
+  description = "The Public access block configuration for the S3 bucket"
   value = aws_s3_bucket_public_access_block.company-bucket-public-access-block.bucket
 }
 
